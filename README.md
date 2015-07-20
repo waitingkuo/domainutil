@@ -1,6 +1,10 @@
 # domainutil
 Simple domain parser
 
+## Installation
+
+    go get github.com/waitingkuo/domainutil
+
 ## Example
 
     package main
