@@ -27,6 +27,10 @@ func TestParseFromRawURL(t *testing.T) {
 		t.Error("Expected www.google.com, got ", domain.SubDomain)
 	}
 
+	if domain.Suffix != "com" {
+		t.Error("Expected www.google.com, got ", domain.SubDomain)
+	}
+
 }
 
 func TestParseFromURL(t *testing.T) {
@@ -140,4 +144,19 @@ func TestParseIncorrectDomain(t *testing.T) {
 		t.Error("Should Fail to parse rawurl ", rawUrl)
 	}
 
+}
+
+func TestParsePublisSuffix(t *testing.T) {
+
+	rawUrl := "http://www.google.com.tw"
+	domain, _ := ParseFromRawURL(rawUrl)
+	if domain.Suffix != "com.tw" {
+		t.Error("Expected www, got ", domain.Suffix)
+	}
+
+	rawUrl = "http://www.google.com.au"
+	domain, _ = ParseFromRawURL(rawUrl)
+	if domain.Suffix != "com.au" {
+		t.Error("Expected www, got ", domain.Suffix)
+	}
 }

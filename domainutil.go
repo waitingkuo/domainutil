@@ -2,6 +2,7 @@ package domainutil
 
 import (
 	"errors"
+	"golang.org/x/net/publicsuffix"
 	"net/url"
 	"regexp"
 )
@@ -10,6 +11,7 @@ type Domain struct {
 	fullDomain string
 	RootDomain string
 	SubDomain  string
+	Suffix     string
 }
 
 func ParseFromRawURL(rawurl string) (*Domain, error) {
@@ -43,11 +45,13 @@ func parse(host string) (*Domain, error) {
 	rootDomain := result[2]
 	subDomain := result[1]
 
+	suffix, _ := publicsuffix.PublicSuffix(host)
+
 	if len(subDomain) > 0 {
 		subDomain = subDomain[:len(subDomain)-1]
 	}
 
-	return &Domain{fullDomain, rootDomain, subDomain}, nil
+	return &Domain{fullDomain, rootDomain, subDomain, suffix}, nil
 }
 func (d *Domain) String() string {
 	return d.fullDomain
